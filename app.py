@@ -87,71 +87,72 @@ def blog_text(keyword, outfit):
 # UI-only redesign: API calls and outfit scoring are retained from the MVP.
 st.markdown("""<style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-:root{--pink:#ed8fb3;--berry:#a84e72;--blush:#fff0f5;--cream:#fffaf7;--ink:#58434b}
-html,body,[class*="css"], [data-testid="stApp"]{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink)}
-[data-testid="stAppViewContainer"]{background:linear-gradient(130deg,#fffafc 0%,#fffdfb 52%,#fdf3f5 100%)}
-[data-testid="stHeader"]{background:transparent}
-.block-container{max-width:1130px;padding-top:2.2rem;padding-bottom:5rem}
-[data-testid="stSidebar"]{background:#fff3f6;border-right:1px solid #f2dbe3}
-[data-testid="stSidebar"] .block-container{padding-top:1.7rem}
-h1,h2,h3{color:#6e4658!important;letter-spacing:-.035em}
-h1{font-size:2.25rem!important}h2{font-size:1.5rem!important}h3{font-size:1.17rem!important}
-[data-testid="stTabs"] [data-baseweb="tab-list"]{gap:10px;border-bottom:1px solid #f1d9e1;padding-bottom:12px;flex-wrap:wrap}
-button[data-baseweb="tab"]{background:#fff;border:1px solid #f1dbe3;border-radius:13px;padding:9px 16px;color:#88616f;font-weight:650}
-button[data-baseweb="tab"][aria-selected="true"]{background:#f9dce7;color:#82445d;border-color:#eeb7cb}
-.stButton>button[kind="primary"], .stDownloadButton>button[kind="primary"]{background:#b96888!important;color:white!important;border:0!important}
-.stButton>button,.stDownloadButton>button{border-radius:12px!important;min-height:40px;border-color:#eacbd5;color:#92516d}
-.stButton>button:hover,.stDownloadButton>button:hover{border-color:#c57d9a;color:#9b4268}
-[data-testid="stMetric"]{background:#fff;border:1px solid #f1dce3;border-radius:16px;padding:15px 18px;box-shadow:0 5px 18px #eeb8cd14}
-[data-testid="stMetricLabel"]{color:#8f6a78}[data-testid="stMetricValue"]{color:#9e5472}
-[data-testid="stAlert"]{border-radius:13px}
-[data-testid="stTextArea"] textarea,[data-testid="stTextInput"] input{background:#fffdfd;border-radius:12px}
-[data-testid="stDataFrame"]{border:1px solid #f0dbe2;border-radius:14px;overflow:hidden}
-[data-testid="stExpander"]{background:#fff;border:1px solid #f1dce3;border-radius:13px}
-.pink-hero{background:linear-gradient(115deg,#fff0f5,#fffaf7);border:1px solid #efd2de;border-radius:22px;padding:24px 28px;margin-bottom:18px;box-shadow:0 10px 35px #dd9eb719}
-.pink-eyebrow{color:#b76e8a;letter-spacing:.15em;font-size:12px;font-weight:750;margin-bottom:8px}
-.pink-title{font-size:32px;font-weight:800;color:#714557;letter-spacing:-.045em;line-height:1.25}
-.pink-sub{font-size:13px;color:#947682;margin-top:8px}
-.pink-section{font-size:21px;font-weight:750;color:#754b5c;margin:16px 0 8px}
-.pink-card{background:#fff;border:1px solid #f0dce4;border-radius:16px;padding:16px 19px;margin:8px 0 14px;box-shadow:0 4px 15px #dfadc017}
-.pink-tag{display:inline-block;background:#fce5ed;color:#a45a78;border-radius:20px;padding:5px 10px;font-size:12px;font-weight:650}
-.pink-note{font-size:13px;color:#715b65;margin:8px 0 16px}
-.pink-divider{border-top:1px solid #f0dbe2;margin:18px 0}
-html,body,[data-testid='stApp']{font-size:16px!important;line-height:1.55!important}
-[data-testid='stWidgetLabel'] p, label, .stMarkdown p{font-size:15px!important;line-height:1.55!important}
-[data-testid='stMetricValue']{font-size:clamp(19px,2vw,28px)!important;overflow-wrap:anywhere}
-[data-testid='stMetricLabel'] p{font-size:13px!important}
-[data-testid='stDataFrame']{max-width:100%}
-button[data-baseweb='tab']{font-size:14px!important;white-space:normal!important;line-height:1.25!important}
-input,textarea,select{font-family:'Pretendard',sans-serif!important;font-size:15px!important}
-@media(max-width:680px){
- .block-container{padding:1rem .8rem 3rem!important}
- .pink-hero{padding:17px 15px;border-radius:15px}.pink-title{font-size:24px}
- .pink-sub{font-size:13px;line-height:1.5}
- .pink-section{font-size:19px}
- [data-testid='stTabs'] [data-baseweb='tab-list']{gap:5px;flex-wrap:nowrap!important;overflow-x:auto}
- button[data-baseweb='tab']{padding:8px 7px!important;font-size:12px!important;min-width:0}
- [data-testid='stHorizontalBlock']{flex-wrap:wrap!important}
- [data-testid='stHorizontalBlock'] > [data-testid='stColumn']{min-width:140px!important;flex:1 1 140px!important}
- [data-testid='stMetric']{padding:11px!important}
- [data-testid='stSidebar']{min-width:min(88vw,320px)!important}
-} 
+:root{--ink:#242426;--muted:#727276;--line:#e9e9eb;--accent:#e7a9bf;--accent-strong:#ae5478;--canvas:#f8f8f8}
+html,body,[data-testid="stApp"],input,textarea,button{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important}
+html,body,[data-testid="stApp"]{color:var(--ink);font-size:16px;line-height:1.55}
+[data-testid="stAppViewContainer"]{background:#fafafa}
+[data-testid="stHeader"]{background:rgba(250,250,250,.95)}
+.block-container{max-width:1050px;padding:2.3rem 2rem 4rem}
+[data-testid="stSidebar"]{background:#fff;border-right:1px solid var(--line)}
+[data-testid="stSidebar"] .block-container{padding-top:1.6rem}
+h1,h2,h3{color:#242426!important;letter-spacing:-.04em;line-height:1.3!important}
+h2{font-size:1.48rem!important}h3{font-size:1.13rem!important}
+[data-testid="stTabs"] [data-baseweb="tab-list"]{gap:3px;border-bottom:1px solid #e5e5e7;padding-bottom:0;overflow-x:auto}
+button[data-baseweb="tab"]{font-size:14px!important;font-weight:650!important;color:#777!important;padding:12px 15px!important;white-space:nowrap!important}
+button[data-baseweb="tab"][aria-selected="true"]{color:#242426!important;border-bottom:2px solid #b55f81!important}
+[data-testid="stWidgetLabel"] p,label,.stMarkdown p{font-size:15px!important;line-height:1.55!important}
+[data-testid="stTextArea"] textarea,[data-testid="stTextInput"] input,[data-testid="stNumberInput"] input{background:#fff!important;border-radius:10px!important;font-size:15px!important}
+[data-testid="stMetric"]{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 17px}
+[data-testid="stMetricLabel"] p{color:#777;font-size:13px!important}
+[data-testid="stMetricValue"]{color:#222;font-size:clamp(19px,2vw,27px)!important;overflow-wrap:anywhere}
+[data-testid="stAlert"]{border-radius:12px}
+[data-testid="stExpander"]{background:#fff;border:1px solid var(--line);border-radius:12px}
+.stButton>button,.stDownloadButton>button{border-radius:10px!important;min-height:43px!important;font-weight:650!important;border:1px solid #dedee1!important;color:#333!important;background:#fff!important}
+.stButton>button[kind="primary"],.stDownloadButton>button[kind="primary"]{background:#262629!important;color:#fff!important;border-color:#262629!important}
+.stButton>button:hover,.stDownloadButton>button:hover{border-color:#b96887!important;color:#b15477!important}
+.stButton>button[kind="primary"]:hover{background:#4a4045!important;color:#fff!important}
+.clean-hero{background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px 29px 23px;margin-bottom:20px;box-shadow:0 3px 14px #00000005}
+.clean-eyebrow{font-size:11px;letter-spacing:.16em;font-weight:750;color:#9b7383;margin-bottom:8px}
+.clean-title{font-size:30px;font-weight:800;color:#222;letter-spacing:-.05em;line-height:1.3}
+.clean-sub{font-size:14px;color:#737378;margin-top:9px;line-height:1.55}
+.clean-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#e4a0b8;margin-right:7px}
+.pink-section{font-size:20px;font-weight:750;color:#262629;margin:21px 0 9px;letter-spacing:-.035em}
+.pink-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px 17px;margin:9px 0 13px}
+.pink-tag{display:inline-block;background:#f9e8ee;color:#a04f70;border-radius:7px;padding:4px 8px;font-size:12px;font-weight:750}
+.result-row{display:grid;grid-template-columns:32px minmax(130px,1fr) 100px 90px;align-items:center;gap:12px;padding:14px 15px;background:#fff;border:1px solid #ececee;border-radius:11px;margin-bottom:7px;font-size:14px}
+.result-name{font-weight:700;color:#29292c;overflow-wrap:anywhere}.result-rank{color:#b26784;font-weight:800}.result-score{color:#68686e}
+@media(max-width:700px){
+ .block-container{padding:1rem .9rem 3rem!important}
+ .clean-hero{padding:18px 17px;border-radius:15px;margin-bottom:13px}
+ .clean-title{font-size:23px}.clean-sub{font-size:13px}
+ .pink-section{font-size:18px;margin:15px 0 8px}
+ [data-testid="stTabs"] [data-baseweb="tab-list"]{gap:0;overflow-x:auto;flex-wrap:nowrap}
+ button[data-baseweb="tab"]{padding:10px 9px!important;font-size:12px!important}
+ [data-testid="stHorizontalBlock"]{flex-wrap:wrap!important;gap:8px!important}
+ [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]{min-width:130px!important;flex:1 1 130px!important}
+ [data-testid="stMetric"]{padding:11px 12px}
+ .result-row{grid-template-columns:25px minmax(0,1fr) auto;gap:5px 8px;padding:12px 11px}
+ .result-score{grid-column:2;grid-row:2;font-size:12px}
+ .result-row strong{grid-column:3;grid-row:1/span 2;font-size:14px}
+ .result-name{font-size:14px}
+ [data-testid="stSidebar"]{min-width:min(88vw,320px)!important}
+}
 </style>""",unsafe_allow_html=True)
 
-st.markdown("""<div class="pink-hero"><div class="pink-eyebrow">✦ LOOKSEON · OUTFIT STUDIO ✦</div><div class="pink-title">🎀 오늘의 코디, 더 가볍게</div><div class="pink-sub">검색 트렌드부터 브랜드 상품, 데일리룩 조합까지 한 곳에서 · 나만의 코디 작업실 ♡</div></div>""",unsafe_allow_html=True)
+st.markdown("""<div class="clean-hero"><div class="clean-eyebrow"><span class="clean-dot"></span>LOOKSEON / OUTFIT STUDIO</div><div class="clean-title">오늘의 코디 작업실</div><div class="clean-sub">검색어 분석 · 브랜드 옷장 · 코디 조합<br>필요한 기능만 모아 빠르고 편하게.</div></div>""",unsafe_allow_html=True)
 with st.sidebar:
-    st.markdown('### ♡ My wardrobe')
+    st.markdown('### 작업 설정')
     budget=st.number_input('코디 전체 예산 (원)',min_value=10000,value=150000,step=10000)
     warmth=st.slider('목표 보온성',1,10,5)
     style=st.selectbox('스타일',['혼합','미니멀','페미닌','캐주얼','스트릿'])
     n=st.selectbox('코디 세트 수',[3,5,10],index=0)
     st.caption('✧ 보온성은 제품 평가 기준이며 실제 체감 온도를 보장하지 않아요.')
     st.markdown('---')
-    st.caption('LOOKSEON STUDIO  ·  made for everyday looks ♡')
+    st.caption('LOOKSEON STUDIO')
 
-tab1,tab2,tab3=st.tabs(['♡ 01 · 키워드 발견','✿ 02 · 브랜드 옷장','✧ 03 · 코디 만들기'])
+tab1,tab2,tab3=st.tabs(['01  키워드 분석','02  브랜드 옷장','03  코디 생성'])
 with tab1:
-    st.markdown('<div class="pink-section">⌕ 네이버 검색어 트렌드</div>',unsafe_allow_html=True)
+    st.markdown('<div class="pink-section">네이버 검색어 트렌드</div>',unsafe_allow_html=True)
     st.caption('입력한 후보 키워드의 모바일 검색 추이를 비교해요. 자동 인기 검색어 발굴이나 절대 검색량 순위는 아닙니다.')
     try:
         cid=st.secrets.get('NAVER_CLIENT_ID','')
@@ -159,18 +160,18 @@ with tab1:
     except Exception:
         cid=os.getenv('NAVER_CLIENT_ID','')
         sec=os.getenv('NAVER_CLIENT_SECRET','')
-    if cid and sec: st.success('♡ 네이버 데이터랩 연결 준비 완료')
+    if cid and sec: st.success('네이버 데이터랩 연결 준비 완료')
     else: st.warning('Streamlit 앱 Settings → Secrets에 NAVER_CLIENT_ID와 NAVER_CLIENT_SECRET을 등록해 주세요.')
-    with st.expander('✎ 비교할 키워드 편집',expanded=('trends' not in st.session_state)):
+    with st.expander('비교할 키워드 편집',expanded=('trends' not in st.session_state)):
         keys=st.text_area('한 줄에 하나씩 입력',value='\n'.join(KEYWORDS),height=210,key='keyword_input')
-    if st.button('✧ 검색 트렌드 분석하기',type='primary',use_container_width=True):
+    if st.button('검색 트렌드 분석하기',type='primary',use_container_width=True):
         try:
             kk=list(dict.fromkeys(x.strip() for x in keys.splitlines() if x.strip()))
             if len(kk)<2: st.warning('키워드를 2개 이상 입력해 주세요.')
             else:
                 with st.spinner('네이버 데이터 확인 중...'): data=trend_fetch(kk,cid,sec)
                 st.session_state['trends']=data
-                st.success('♡ 실제 네이버 데이터 수신 완료')
+                st.success('실제 네이버 데이터 수신 완료')
         except Exception as e: st.error(f'조회 실패: {e}')
     if 'trends' in st.session_state:
         data=st.session_state['trends']
@@ -182,7 +183,7 @@ with tab1:
         c1.metric('분석한 키워드',f'{len(rows)}개')
         c2.metric('전주 대비 상승',f"{sum(r['전주 대비 증감률 (%)']>0 for r in valid)}개")
         c3.metric('상승률 1위',best['키워드'] if best else '집계 불가')
-        st.markdown('<div class="pink-section">✿ 이번 주 키워드 리포트</div>',unsafe_allow_html=True)
+        st.markdown('<div class="pink-section">이번 주 키워드 리포트</div>',unsafe_allow_html=True)
         # st.table renders all rows without a nested vertical scrollbar.
         # Dynamic height for dataframes prevents the internal scroll at ordinary row counts.
         import pandas as pd
@@ -193,20 +194,19 @@ with tab1:
         for j,r in enumerate(rows,1):
             delta=r['전주 대비 증감률 (%)']
             dtext='비교 불가' if delta is None else f'{delta:+.1f}%'
-            dcolor='#a05270' if delta is not None and delta>0 else '#66545a'
+            dcolor='#9d5572' if delta is not None and delta>0 else '#55565b'
             cards.append(f'<div class="result-row"><span class="result-rank">{j:02d}</span><span class="result-name">{escape(r["키워드"])}</span><span class="result-score">지수 {r["최근 7일 상대지수"]:.2f}</span><strong style="color:{dcolor}">{dtext}</strong></div>')
-        st.markdown('''<style>.result-row{display:grid;grid-template-columns:35px minmax(120px,1fr) 105px 95px;align-items:center;gap:10px;padding:13px 15px;background:#fff;border:1px solid #f0dce4;border-radius:12px;margin-bottom:7px;font-size:14px}.result-name{font-weight:700;color:#553d47}.result-rank{color:#b36b8b;font-weight:800}.result-score{color:#6f6065}@media(max-width:680px){.result-row{grid-template-columns:27px minmax(0,1fr) auto;gap:7px;padding:12px 10px}.result-score{grid-column:2;grid-row:2;font-size:12px}.result-row strong{grid-column:3;grid-row:1 / span 2;font-size:14px}.result-name{font-size:14px}}</style>''',unsafe_allow_html=True)
         st.markdown(''.join(cards),unsafe_allow_html=True)
         st.caption('※ 다른 API 요청 배치의 상대지수는 직접 비교할 수 없어요. 상승률 기준 정렬이며 검색량 순위가 아닙니다. 이전 주 데이터가 0이면 증감률을 —로 표시합니다.')
         st.download_button('↓ 키워드 리포트 CSV 저장',data=pd.DataFrame(rows).to_csv(index=False).encode('utf-8-sig'),file_name='lookseon_keyword_report.csv',mime='text/csv')
         st.session_state['keyword_choice']=[x['키워드'] for x in rows]
 with tab2:
-    st.markdown('<div class="pink-section">♧ 브랜드 옷장 채우기</div>',unsafe_allow_html=True)
+    st.markdown('<div class="pink-section">브랜드 옷장</div>',unsafe_allow_html=True)
     st.caption('에이블리 브랜드 상품의 실제 가격과 링크를 등록하면 코디 조합에 사용해요.')
     st.info('현재 자동 상품 수집은 지원하지 않습니다. 샘플은 가상 상품이므로 실제 구매 링크로 사용하면 안 됩니다.')
     sample_path=BASE/'sample_products.json'
     sample=json.loads(sample_path.read_text(encoding='utf-8')) if sample_path.exists() else []
-    st.markdown('#### ♡ 에이블리 상품 한 개씩 등록')
+    st.markdown('#### 에이블리 상품 등록')
     st.caption('상품 상세페이지에서 브랜드·상품명·가격·링크를 확인해 직접 입력하세요. 자동 판매순위나 소재 정보는 추정하지 않습니다.')
     with st.form('ably_manual_product',clear_on_submit=True):
         aa,bb=st.columns(2)
@@ -232,15 +232,15 @@ with tab2:
         else:
             new={'id':f'manual-{len(st.session_state.get("products",[]))+1}-{cat}','source':'에이블리 브랜드','category':cat,'brand':brand.strip(),'name':name.strip(),'price':int(price),'url':url.strip(),'color':color,'style':product_style,'rank':int(rank),'warmth':pw,'lightness':pl,'softness':ps}
             st.session_state.setdefault('products',[]).append(new)
-            st.success(f'♡ {name} 등록 완료!')
+            st.success(f'{name} 등록 완료!')
     if st.session_state.get('products'):
         st.download_button('↓ 등록 상품 백업 JSON',data=json.dumps(st.session_state['products'],ensure_ascii=False,indent=2),file_name='lookseon_products.json',mime='application/json',use_container_width=True)
     st.divider()
     st.markdown('#### 여러 상품 한꺼번에 등록')
     uploaded=st.file_uploader('상품 JSON 파일 가져오기',type=['json'])
-    with st.expander('✎ 상품 JSON 직접 편집',expanded=False):
+    with st.expander('상품 JSON 직접 편집',expanded=False):
         manual=st.text_area('상품 목록',value=json.dumps(sample,ensure_ascii=False,indent=2),height=260)
-    if st.button('♡ 상품 검증하고 등록',type='primary'):
+    if st.button('상품 검증하고 등록',type='primary'):
         try:
             raw=uploaded.getvalue().decode('utf-8') if uploaded else manual
             products=safe_products(json.loads(raw))
@@ -261,7 +261,7 @@ with tab2:
             for p in products:
                 st.markdown(f'<div class="result-row"><span class="result-rank">♡</span><span class="result-name">{escape(p["brand"])} · {escape(p["name"])}</span><span class="result-score">{escape(p["category"])}</span><strong>{p["price"]:,}원</strong></div>',unsafe_allow_html=True)
 with tab3:
-    st.markdown('<div class="pink-section">✧ 나만의 데일리룩 만들기</div>',unsafe_allow_html=True)
+    st.markdown('<div class="pink-section">코디 만들기</div>',unsafe_allow_html=True)
     st.caption('아우터·상의·하의·신발·가방을 예산 내에서 조합해요. 실제 상품 데이터가 먼저 필요합니다.')
     products=st.session_state.get('products',[])
     available=st.session_state.get('keyword_choice',KEYWORDS)
@@ -270,7 +270,7 @@ with tab3:
     c1.metric('예산',f'{budget:,}원')
     c2.metric('보온성',f'{warmth}/10')
     c3.metric('코디 수',f'{n}세트')
-    if st.button('🎀 코디 자동 조합하기',type='primary',use_container_width=True):
+    if st.button('코디 자동 조합하기',type='primary',use_container_width=True):
         if not products: st.error('② 브랜드 옷장에서 실제 상품을 먼저 등록해 주세요.')
         elif any(p.get('demo',False) for p in products): st.error('가상 샘플 상품이 포함되어 있어요. 실제 에이블리 브랜드 상품으로 바꿔주세요.')
         else:
