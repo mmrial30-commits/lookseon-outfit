@@ -86,9 +86,9 @@ def blog_text(keyword, outfit):
 
 # UI-only redesign: API calls and outfit scoring are retained from the MVP.
 st.markdown("""<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Gowun+Dodum&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 :root{--pink:#ed8fb3;--berry:#a84e72;--blush:#fff0f5;--cream:#fffaf7;--ink:#58434b}
-html,body,[class*="css"], [data-testid="stApp"]{font-family:'DM Sans','Gowun Dodum',sans-serif;color:var(--ink)}
+html,body,[class*="css"], [data-testid="stApp"]{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--ink)}
 [data-testid="stAppViewContainer"]{background:linear-gradient(130deg,#fffafc 0%,#fffdfb 52%,#fdf3f5 100%)}
 [data-testid="stHeader"]{background:transparent}
 .block-container{max-width:1130px;padding-top:2.2rem;padding-bottom:5rem}
@@ -115,9 +115,27 @@ button[data-baseweb="tab"][aria-selected="true"]{background:#f9dce7;color:#82445
 .pink-section{font-size:21px;font-weight:750;color:#754b5c;margin:16px 0 8px}
 .pink-card{background:#fff;border:1px solid #f0dce4;border-radius:16px;padding:16px 19px;margin:8px 0 14px;box-shadow:0 4px 15px #dfadc017}
 .pink-tag{display:inline-block;background:#fce5ed;color:#a45a78;border-radius:20px;padding:5px 10px;font-size:12px;font-weight:650}
-.pink-note{font-size:12px;color:#947783;margin:8px 0 16px}
+.pink-note{font-size:13px;color:#715b65;margin:8px 0 16px}
 .pink-divider{border-top:1px solid #f0dbe2;margin:18px 0}
-@media(max-width:680px){.block-container{padding:1rem .8rem 3rem}.pink-hero{padding:18px}.pink-title{font-size:25px}}
+html,body,[data-testid='stApp']{font-size:16px!important;line-height:1.55!important}
+[data-testid='stWidgetLabel'] p, label, .stMarkdown p{font-size:15px!important;line-height:1.55!important}
+[data-testid='stMetricValue']{font-size:clamp(19px,2vw,28px)!important;overflow-wrap:anywhere}
+[data-testid='stMetricLabel'] p{font-size:13px!important}
+[data-testid='stDataFrame']{max-width:100%}
+button[data-baseweb='tab']{font-size:14px!important;white-space:normal!important;line-height:1.25!important}
+input,textarea,select{font-family:'Pretendard',sans-serif!important;font-size:15px!important}
+@media(max-width:680px){
+ .block-container{padding:1rem .8rem 3rem!important}
+ .pink-hero{padding:17px 15px;border-radius:15px}.pink-title{font-size:24px}
+ .pink-sub{font-size:13px;line-height:1.5}
+ .pink-section{font-size:19px}
+ [data-testid='stTabs'] [data-baseweb='tab-list']{gap:5px;flex-wrap:nowrap!important;overflow-x:auto}
+ button[data-baseweb='tab']{padding:8px 7px!important;font-size:12px!important;min-width:0}
+ [data-testid='stHorizontalBlock']{flex-wrap:wrap!important}
+ [data-testid='stHorizontalBlock'] > [data-testid='stColumn']{min-width:140px!important;flex:1 1 140px!important}
+ [data-testid='stMetric']{padding:11px!important}
+ [data-testid='stSidebar']{min-width:min(88vw,320px)!important}
+} 
 </style>""",unsafe_allow_html=True)
 
 st.markdown("""<div class="pink-hero"><div class="pink-eyebrow">✦ LOOKSEON · OUTFIT STUDIO ✦</div><div class="pink-title">🎀 오늘의 코디, 더 가볍게</div><div class="pink-sub">검색 트렌드부터 브랜드 상품, 데일리룩 조합까지 한 곳에서 · 나만의 코디 작업실 ♡</div></div>""",unsafe_allow_html=True)
@@ -170,7 +188,15 @@ with tab1:
         import pandas as pd
         df=pd.DataFrame(rows)
         df['전주 대비 증감률 (%)']=df['전주 대비 증감률 (%)'].map(lambda x: '—' if x is None else f'{x:+.1f}%')
-        st.table(df.set_index('키워드'))
+        from html import escape
+        cards=[]
+        for j,r in enumerate(rows,1):
+            delta=r['전주 대비 증감률 (%)']
+            dtext='비교 불가' if delta is None else f'{delta:+.1f}%'
+            dcolor='#a05270' if delta is not None and delta>0 else '#66545a'
+            cards.append(f'<div class="result-row"><span class="result-rank">{j:02d}</span><span class="result-name">{escape(r["키워드"])}</span><span class="result-score">지수 {r["최근 7일 상대지수"]:.2f}</span><strong style="color:{dcolor}">{dtext}</strong></div>')
+        st.markdown('''<style>.result-row{display:grid;grid-template-columns:35px minmax(120px,1fr) 105px 95px;align-items:center;gap:10px;padding:13px 15px;background:#fff;border:1px solid #f0dce4;border-radius:12px;margin-bottom:7px;font-size:14px}.result-name{font-weight:700;color:#553d47}.result-rank{color:#b36b8b;font-weight:800}.result-score{color:#6f6065}@media(max-width:680px){.result-row{grid-template-columns:27px minmax(0,1fr) auto;gap:7px;padding:12px 10px}.result-score{grid-column:2;grid-row:2;font-size:12px}.result-row strong{grid-column:3;grid-row:1 / span 2;font-size:14px}.result-name{font-size:14px}}</style>''',unsafe_allow_html=True)
+        st.markdown(''.join(cards),unsafe_allow_html=True)
         st.caption('※ 다른 API 요청 배치의 상대지수는 직접 비교할 수 없어요. 상승률 기준 정렬이며 검색량 순위가 아닙니다. 이전 주 데이터가 0이면 증감률을 —로 표시합니다.')
         st.download_button('↓ 키워드 리포트 CSV 저장',data=pd.DataFrame(rows).to_csv(index=False).encode('utf-8-sig'),file_name='lookseon_keyword_report.csv',mime='text/csv')
         st.session_state['keyword_choice']=[x['키워드'] for x in rows]
@@ -180,6 +206,37 @@ with tab2:
     st.info('현재 자동 상품 수집은 지원하지 않습니다. 샘플은 가상 상품이므로 실제 구매 링크로 사용하면 안 됩니다.')
     sample_path=BASE/'sample_products.json'
     sample=json.loads(sample_path.read_text(encoding='utf-8')) if sample_path.exists() else []
+    st.markdown('#### ♡ 에이블리 상품 한 개씩 등록')
+    st.caption('상품 상세페이지에서 브랜드·상품명·가격·링크를 확인해 직접 입력하세요. 자동 판매순위나 소재 정보는 추정하지 않습니다.')
+    with st.form('ably_manual_product',clear_on_submit=True):
+        aa,bb=st.columns(2)
+        with aa:
+            cat=st.selectbox('카테고리',CATS)
+            brand=st.text_input('브랜드명',placeholder='실제 브랜드명')
+            name=st.text_input('상품명',placeholder='상품 페이지에 적힌 이름')
+            price=st.number_input('현재 가격 (원)',min_value=1000,step=1000,value=20000)
+        with bb:
+            url=st.text_input('에이블리 상품 URL',placeholder='https://...')
+            color=st.selectbox('색상',sorted(PALETTE))
+            product_style=st.selectbox('분위기',['미니멀','페미닌','캐주얼','스트릿'])
+            rank=st.number_input('직접 확인한 랭킹 (모르면 9999)',min_value=1,value=9999)
+        st.caption('아래 점수는 직접 확인한 소재·핏·후기를 바탕으로 매기는 주관적 평가입니다.')
+        x,y,z=st.columns(3)
+        with x: pw=st.slider('보온성',1,10,5,key='manual_warmth')
+        with y: pl=st.slider('가벼움',1,10,5,key='manual_lightness')
+        with z: ps=st.slider('여리여리함',1,10,5,key='manual_softness')
+        submitted=st.form_submit_button('＋ 상품 추가',type='primary',use_container_width=True)
+    if submitted:
+        if not brand.strip() or not name.strip() or not url.strip().startswith('https://'):
+            st.error('브랜드명·상품명·https 상품 링크를 정확히 입력해 주세요.')
+        else:
+            new={'id':f'manual-{len(st.session_state.get("products",[]))+1}-{cat}','source':'에이블리 브랜드','category':cat,'brand':brand.strip(),'name':name.strip(),'price':int(price),'url':url.strip(),'color':color,'style':product_style,'rank':int(rank),'warmth':pw,'lightness':pl,'softness':ps}
+            st.session_state.setdefault('products',[]).append(new)
+            st.success(f'♡ {name} 등록 완료!')
+    if st.session_state.get('products'):
+        st.download_button('↓ 등록 상품 백업 JSON',data=json.dumps(st.session_state['products'],ensure_ascii=False,indent=2),file_name='lookseon_products.json',mime='application/json',use_container_width=True)
+    st.divider()
+    st.markdown('#### 여러 상품 한꺼번에 등록')
     uploaded=st.file_uploader('상품 JSON 파일 가져오기',type=['json'])
     with st.expander('✎ 상품 JSON 직접 편집',expanded=False):
         manual=st.text_area('상품 목록',value=json.dumps(sample,ensure_ascii=False,indent=2),height=260)
@@ -200,7 +257,9 @@ with tab2:
         import pandas as pd
         display=pd.DataFrame([{'카테고리':p['category'],'브랜드':p.get('brand',''),'상품명':p.get('name',''),'가격':p['price']} for p in products])
         if not display.empty:
-            st.table(display.set_index('카테고리'))
+            from html import escape
+            for p in products:
+                st.markdown(f'<div class="result-row"><span class="result-rank">♡</span><span class="result-name">{escape(p["brand"])} · {escape(p["name"])}</span><span class="result-score">{escape(p["category"])}</span><strong>{p["price"]:,}원</strong></div>',unsafe_allow_html=True)
 with tab3:
     st.markdown('<div class="pink-section">✧ 나만의 데일리룩 만들기</div>',unsafe_allow_html=True)
     st.caption('아우터·상의·하의·신발·가방을 예산 내에서 조합해요. 실제 상품 데이터가 먼저 필요합니다.')
@@ -211,7 +270,7 @@ with tab3:
     c1.metric('예산',f'{budget:,}원')
     c2.metric('보온성',f'{warmth}/10')
     c3.metric('코디 수',f'{n}세트')
-    if st.button('🎀 코디 3초 조합하기',type='primary',use_container_width=True):
+    if st.button('🎀 코디 자동 조합하기',type='primary',use_container_width=True):
         if not products: st.error('② 브랜드 옷장에서 실제 상품을 먼저 등록해 주세요.')
         elif any(p.get('demo',False) for p in products): st.error('가상 샘플 상품이 포함되어 있어요. 실제 에이블리 브랜드 상품으로 바꿔주세요.')
         else:
