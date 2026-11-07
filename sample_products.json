@@ -1,0 +1,7 @@
+[
+  {"id":"demo-outer","demo":true,"source":"에이블리 브랜드","category":"아우터","brand":"가상브랜드","name":"예시 울 코트","price":49000,"url":"https://example.com/demo-outer","color":"핑크","warmth":6,"lightness":7,"softness":8,"style":"페미닌","rank":9999},
+  {"id":"demo-top","demo":true,"source":"에이블리 브랜드","category":"상의","brand":"가상브랜드","name":"예시 니트","price":19000,"url":"https://example.com/demo-top","color":"크림","warmth":5,"lightness":8,"softness":9,"style":"미니멀","rank":9999},
+  {"id":"demo-bottom","demo":true,"source":"에이블리 브랜드","category":"하의","brand":"가상브랜드","name":"예시 팬츠","price":29000,"url":"https://example.com/demo-bottom","color":"브라운","warmth":5,"lightness":7,"softness":7,"style":"캐주얼","rank":9999},
+  {"id":"demo-shoes","demo":true,"source":"에이블리 브랜드","category":"신발","brand":"가상브랜드","name":"예시 로퍼","price":25000,"url":"https://example.com/demo-shoes","color":"브라운","warmth":4,"lightness":7,"softness":7,"style":"미니멀","rank":9999},
+  {"id":"demo-bag","demo":true,"source":"에이블리 브랜드","category":"가방","brand":"가상브랜드","name":"예시 숄더백","price":18000,"url":"https://example.com/demo-bag","color":"브라운","warmth":5,"lightness":8,"softness":8,"style":"페미닌","rank":9999}
+]
